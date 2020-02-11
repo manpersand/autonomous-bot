@@ -7,6 +7,24 @@ import gyro
 WHEEL_DIAMETER = 63.9  # diameter of the wheel in millimeters
 STEP_COUNT = 20.0  # number of slots in the wheel speed encoder ring
 
+
+# pulse counters for speed sensors
+counter_right = 0
+counter_left = 0
+
+
+# right speed pulse counter event
+def ev_right_count():
+    global counter_right
+    counter_right += 1
+
+
+# left speed pulse counter event
+def ev_left_count():
+    global counter_left
+    counter_left += 1
+
+
 # Motor gpio setup (forward pin, backward pin)
 right_motors = gpio.Motor(17, 27)
 left_motors = gpio.Motor(24, 23)
@@ -17,22 +35,9 @@ left_speed = gpio.DigitalInputDevice(22)
 right_speed.when_activated = ev_right_count  # event
 left_speed.when_activated = ev_left_count  # event
 
-# pulse counters for speed sensors
-counter_right = 0
-counter_left = 0
-
-
-# right speed pulse counter event
-def ev_right_count():
-    counter_right += 1
-
-
-# left speed pulse counter event
-def ev_left_count():
-    counter_left += 1
-
 
 def counter_reset():
+    global counter_right, counter_left
     counter_right = 0
     counter_left = 0
 
@@ -42,7 +47,7 @@ def counter_reset():
 # 1 step = 1 slot on the encoder wheel
 def cm_to_steps(cm):
     circumference = (WHEEL_DIAMETER * math.pi) / 10  # divide by 10 to go from mm to cm
-    steps = (circumference / STEP_COUNT) * cm  # steps required to travel the given cm distance
+    steps = cm / (circumference / STEP_COUNT)  # steps required to travel the given cm distance
     return int(steps)  # return the number of steps as integer
 
 
