@@ -33,6 +33,10 @@ try:
             bot.right(0.70)
             sleep(0.5)
             bot.Stop()
+        elif char == ord('f'):
+            bot.forward(10, 0.7)
+        elif char == ord('b'):
+            bot.backward(10, 0.7)
 
 
 finally:
