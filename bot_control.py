@@ -6,6 +6,11 @@ import time
 #ultra sonic distance sensor setup
 proxSensor = gpio.DistanceSensor(trigger=5, echo=6, max_distance=3)
 
+#function to return the current distance of object in the proximity
+# of the sensor, in centimeters
+def distance():
+    global proxSensor
+    return proxSensor.distance * 100
 
 # motor wheel constants
 WHEEL_DIAMETER = 67.9  # diameter of the wheel in millimeters
@@ -92,8 +97,8 @@ def cm_forward(cm, speed=1):
     counter_reset()
     forward(speed)
     while counter_left < steps and counter_right < steps:
-        print("left counter:" + str(counter_left)),
-        print("right counter:" + str(counter_right)),
+        print("left counter:" + str(counter_left) + "\r\n"),
+        print("right counter:" + str(counter_right) + "\r\n"),
     stop()
     # reset counters
     counter_reset()
@@ -105,8 +110,8 @@ def cm_backward(cm, speed=1):
     counter_reset()
     backward(speed)
     while counter_left < steps and counter_right < steps:
-        print("left counter:" + str(counter_left)),
-        print("right counter:" + str(counter_right)),
+        print("left counter:" + str(counter_left) + "\r\n"),
+        print("right counter:" + str(counter_right) + "\r\n"),
     stop()
     # reset counters
     counter_reset()

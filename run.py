@@ -34,9 +34,9 @@ try:
             sleep(0.5)
             bot.Stop()
         elif char == ord('f'):
-            bot.cm_forward(100, 0.5)
+            bot.cm_forward(100, 0.7)
         elif char == ord('b'):
-            bot.cm_backward(100, 0.5)
+            bot.cm_backward(100, 0.7)
         else:
             bot.stop()
 
