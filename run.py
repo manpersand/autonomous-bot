@@ -11,7 +11,7 @@ screen.keypad(True)
 
 try:
     while True:
-        bot.stop()
+        #bot.stop()
         char = screen.getch()
         if char == ord('q'):
             break
@@ -34,9 +34,11 @@ try:
             sleep(0.5)
             bot.Stop()
         elif char == ord('f'):
-            bot.forward(10, 0.7)
+            bot.cm_forward(100, 0.5)
         elif char == ord('b'):
-            bot.backward(10, 0.7)
+            bot.cm_backward(100, 0.5)
+        else:
+            bot.stop()
 
 
 finally:

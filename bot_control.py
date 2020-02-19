@@ -1,10 +1,14 @@
 import gpiozero as gpio
 import math
-import proximity
 import gyro
+import time
+
+#ultra sonic distance sensor setup
+proxSensor = gpio.DistanceSensor(trigger=5, echo=6, max_distance=3)
+
 
 # motor wheel constants
-WHEEL_DIAMETER = 63.9  # diameter of the wheel in millimeters
+WHEEL_DIAMETER = 67.9  # diameter of the wheel in millimeters
 STEP_COUNT = 20.0  # number of slots in the wheel speed encoder ring
 
 
@@ -51,25 +55,6 @@ def cm_to_steps(cm):
     return int(steps)  # return the number of steps as integer
 
 
-# move forward by centimeters given at a given speed between 0-1
-def forward(cm, speed=1):
-    steps = cm_to_steps(cm)  # get the number of steps required for the given cm
-    while counter_left < steps and counter_right < steps:
-        forward(speed)
-    stop()
-    # reset counters
-    counter_reset()
-
-
-# move forward by centimeters given at a given speed between 0-1
-def backward(cm, speed=1):
-    steps = cm_to_steps(cm)  # get the number of steps required for the given cm
-    while counter_left < steps and counter_right < steps:
-        backward(speed)
-    stop()
-    # reset counters
-    counter_reset()
-
 
 # move forward with a speed between 0-1 (default = 1)
 def forward(speed=1):
@@ -99,3 +84,30 @@ def left(speed=1):
 def right(speed=1):
     left_motors.forward(speed)
     right_motors.backward(speed)
+
+
+# move forward by centimeters given at a given speed between 0-1
+def cm_forward(cm, speed=1):
+    steps = cm_to_steps(cm)  # get the number of steps required for the given cm
+    counter_reset()
+    forward(speed)
+    while counter_left < steps and counter_right < steps:
+        print("left counter:" + str(counter_left)),
+        print("right counter:" + str(counter_right)),
+    stop()
+    # reset counters
+    counter_reset()
+
+
+# move forward by centimeters given at a given speed between 0-1
+def cm_backward(cm, speed=1):
+    steps = cm_to_steps(cm)  # get the number of steps required for the given cm
+    counter_reset()
+    backward(speed)
+    while counter_left < steps and counter_right < steps:
+        print("left counter:" + str(counter_left)),
+        print("right counter:" + str(counter_right)),
+    stop()
+    # reset counters
+    counter_reset()
+
