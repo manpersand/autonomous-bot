@@ -96,7 +96,7 @@ def cm_forward(cm, speed=1):
     steps = cm_to_steps(cm)  # get the number of steps required for the given cm
     counter_reset()
     forward(speed)
-    while counter_left < steps and counter_right < steps:
+    while counter_left < steps or counter_right < steps:
         print("left counter:" + str(counter_left) + "\r\n"),
         print("right counter:" + str(counter_right) + "\r\n"),
     stop()
@@ -109,7 +109,7 @@ def cm_backward(cm, speed=1):
     steps = cm_to_steps(cm)  # get the number of steps required for the given cm
     counter_reset()
     backward(speed)
-    while counter_left < steps and counter_right < steps:
+    while counter_left < steps or counter_right < steps:
         print("left counter:" + str(counter_left) + "\r\n"),
         print("right counter:" + str(counter_right) + "\r\n"),
     stop()
