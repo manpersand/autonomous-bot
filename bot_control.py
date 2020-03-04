@@ -1,16 +1,26 @@
 import gpiozero as gpio
 import math
-import gyro
 import time
+import board
+import busio
+from adafruit_lsm6ds import LSM6DSOX
+
+
+#setup the gyroscope sensor using i2c
+i2c = busio.I2C(board.SCL, board.SDA)
+gyro_sensor = LSM6DSOX(i2c)
+
 
 #ultra sonic distance sensor setup
-proxSensor = gpio.DistanceSensor(trigger=5, echo=6, max_distance=3)
+dist_sensor = gpio.DistanceSensor(trigger=5, echo=6, max_distance=3)
+
 
 #function to return the current distance of object in the proximity
 # of the sensor, in centimeters
 def distance():
-    global proxSensor
-    return proxSensor.distance * 100
+    global dist_sensor
+    return dist_sensor.distance * 100
+
 
 # motor wheel constants
 WHEEL_DIAMETER = 67.9  # diameter of the wheel in millimeters
@@ -60,19 +70,6 @@ def cm_to_steps(cm):
     return int(steps)  # return the number of steps as integer
 
 
-
-# move forward with a speed between 0-1 (default = 1)
-def forward(speed=1):
-    left_motors.forward(speed)
-    right_motors.forward(speed)
-
-
-# move backward with a speed between 0-1 (default = 1)
-def backward(speed=1):
-    left_motors.backward(speed)
-    right_motors.backward(speed)
-
-
 # stop all motors
 def stop():
     left_motors.stop()
@@ -81,8 +78,13 @@ def stop():
 
 # skid steer LEFT with a speed between 0-1 (default = 1)
 def left(speed=1):
+    currentRotation = gyro_sensor.gyro[2]  # DID NOT TEST THIS YET!
     left_motors.backward(speed)
     right_motors.forward(speed)
+    while currentRotation 
+
+
+
 
 
 # skid steer RIGHT with a speed between 0-1 (default = 1)
@@ -92,10 +94,11 @@ def right(speed=1):
 
 
 # move forward by centimeters given at a given speed between 0-1
-def cm_forward(cm, speed=1):
+def forward(cm, speed=1):
     steps = cm_to_steps(cm)  # get the number of steps required for the given cm
     counter_reset()
-    forward(speed)
+    left_motors.forward(speed)
+    right_motors.forward(speed)
     while counter_left < steps or counter_right < steps:
         print("left counter:" + str(counter_left) + "\r\n"),
         print("right counter:" + str(counter_right) + "\r\n"),
@@ -105,10 +108,11 @@ def cm_forward(cm, speed=1):
 
 
 # move forward by centimeters given at a given speed between 0-1
-def cm_backward(cm, speed=1):
+def backward(cm, speed=1):
     steps = cm_to_steps(cm)  # get the number of steps required for the given cm
     counter_reset()
-    backward(speed)
+    left_motors.backward(speed)
+    right_motors.backward(speed)
     while counter_left < steps or counter_right < steps:
         print("left counter:" + str(counter_left) + "\r\n"),
         print("right counter:" + str(counter_right) + "\r\n"),
