@@ -78,11 +78,24 @@ def stop():
 
 # skid steer LEFT with a speed between 0-1 (default = 1)
 def left(speed=1):
-    currentRotation = gyro_sensor.gyro[2]  # DID NOT TEST THIS YET!
+    current_rotation = 0
     left_motors.backward(speed)
     right_motors.forward(speed)
-    while currentRotation 
+    prev_gyro = sensor.gyro
+    while current_rotation != 90:
 
+
+
+#loop {
+
+#dt = time_now() - time_of_last_read; //seconds
+#rate = read_gyro();  //degrees/second
+#time_of_last_read=time_now();
+
+#angle += rate*dt;
+
+#do_something();
+#}
 
 
 
