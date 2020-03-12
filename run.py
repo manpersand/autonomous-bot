@@ -11,14 +11,14 @@ screen.keypad(True)
 
 try:
     while True:
-        #bot.stop()
+        # bot.stop()
         char = screen.getch()
         if char == ord('q'):
             break
         elif char == curses.KEY_UP:
-            bot.forward(0.7)
+            bot.forward(100, 0.7)
         elif char == curses.KEY_DOWN:
-            bot.backward(0.7)
+            bot.backward(100, 0.7)
         elif char == curses.KEY_RIGHT:
             bot.right(0.7)
         elif char == curses.KEY_LEFT:
@@ -33,10 +33,6 @@ try:
             bot.right(0.70)
             sleep(0.5)
             bot.Stop()
-        elif char == ord('f'):
-            bot.cm_forward(100, 0.7)
-        elif char == ord('b'):
-            bot.cm_backward(100, 0.7)
         else:
             bot.stop()
 
