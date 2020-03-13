@@ -77,32 +77,32 @@ def stop():
     right_motors.stop()
 
 
-# skid steer LEFT with a speed between 0-1 (default = 1)
-def left(speed=1):
-    angle = 0  # set the angle to 0
+# skid steer LEFT with a speed between 0-1 (default = 1) and angle between 0 to 360
+def left(speed=1, angle=90.0):
+    current_angle = 0.0  # set the angle to 0
     last_time = time.time()  # capture the start time
     left_motors.backward(speed)  # start the left motor backwards
     right_motors.forward(speed)  # and the right motor forwards to skid steer to the left
-    while angle < 90.0:  # keep spinning until 90 degrees angle is achieved
+    while current_angle < angle:  # keep spinning until degrees of angle is achieved
         current_time = time.time()  # capture the current_time
-        # calculate the turn angle by intgrating the rate of
+        # calculate the turn angle by integrating the rate of
         # rotation(degrees/s) with respect to time
-        angle += sensor.gyro[2] * (current_time - last_time)
+        current_angle += sensor.gyro[2] * (current_time - last_time)
         last_time = current_time  # store the prev time stamp as the last time
     stop() # when here 90 degrees angle was reached so stop the motor
 
 
-# skid steer RIGHT with a speed between 0-1 (default = 1)
-def right(speed=1):
-    angle = 0  # set the angle to 0
+# skid steer RIGHT with a speed between 0-1 (default = 1) and angle between 0 to -360
+def right(speed=1,angle=-90):
+    current_angle = 0.0  # set the angle to 0
     last_time = time.time()  # capture the start time
-    left_motors.forward(speed)  # start the left motor backwards
-    right_motors.backward(speed)  # and the right motor forwards to skid steer to the left
-    while angle > -90.0:  # keep spinning until 90 degrees angle is achieved
+    left_motors.forward(speed)  # start the left motor forwards
+    right_motors.backward(speed)  # and the right motor backwards to skid steer to the left
+    while current_angle > angle:  # keep spinning until degrees of angle is achieved
         current_time = time.time()  # capture the current_time
-        # calculate the turn angle by intgrating the rate of
+        # calculate the turn angle by integrating the rate of
         # rotation(degrees/s) with respect to time
-        angle += sensor.gyro[2] * (current_time - last_time)
+        current_angle += sensor.gyro[2] * (current_time - last_time)
         last_time = current_time  # store the prev time stamp as the last time
     stop()  # when here 90 degrees angle was reached so stop the motor
 
