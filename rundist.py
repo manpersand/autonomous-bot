@@ -1,16 +1,16 @@
 import bot_control as bot
 from time import sleep
 
-
 distance = bot.distance()
 
 while True:
-    while distance > 20:
+    while distance > 30:
         print("Distance : " + str(distance)),
-        bot.forward(0.7)
+        bot.left_motors.forward(0.7)
+        bot.right_motors.forward(0.7)
         distance = bot.distance()
 
-    while distance <= 20:
+    while distance <= 30:
         print("Distance : " + str(distance) + "Too close!")
         bot.stop()
         bot.servo.left()
@@ -20,5 +20,8 @@ while True:
         sleep(0.4)
         right_distance = bot.distance()
         if left_distance > right_distance:
-            bot.left
+            bot.left()
+        elif right_distance > left_distance:
+            bot.right()
+        distance = bot.distance()
 
