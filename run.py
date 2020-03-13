@@ -24,14 +24,11 @@ try:
         elif char == curses.KEY_LEFT:
             bot.left(0.7)
         elif char == ord('d'):
-            bot.forward(0.7)
-            sleep(0.5)
-            bot.backward(0.7)
-            sleep(0.5)
-            bot.left(0.7)
-            sleep(0.5)
-            bot.right(0.70)
-            sleep(0.5)
+            bot.forward(cm=2)
+            bot.backward(cm=2)
+            bot.left(angle=45)
+            bot.right(angle=90)
+            bot.left(angle=45)
             bot.Stop()
         else:
             bot.stop()

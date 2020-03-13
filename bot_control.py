@@ -4,6 +4,7 @@ import time
 import board
 import busio
 from adafruit_lsm6ds import LSM6DSOX
+import servo
 
 
 #setup the gyroscope sensor using i2c
