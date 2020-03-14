@@ -87,7 +87,7 @@ def left(speed=1, angle=90.0):
         current_time = time.time()  # capture the current_time
         # calculate the turn angle by integrating the rate of
         # rotation(degrees/s) with respect to time
-        current_angle += sensor.gyro[2] * (current_time - last_time)
+        current_angle += gyro_sensor.gyro[2] * (current_time - last_time)
         last_time = current_time  # store the prev time stamp as the last time
     stop() # when here 90 degrees angle was reached so stop the motor
 
@@ -102,7 +102,7 @@ def right(speed=1,angle=-90):
         current_time = time.time()  # capture the current_time
         # calculate the turn angle by integrating the rate of
         # rotation(degrees/s) with respect to time
-        current_angle += sensor.gyro[2] * (current_time - last_time)
+        current_angle += gyro_sensor.gyro[2] * (current_time - last_time)
         last_time = current_time  # store the prev time stamp as the last time
     stop()  # when here 90 degrees angle was reached so stop the motor
 
@@ -114,8 +114,7 @@ def forward(cm, speed=1):
     left_motors.forward(speed)
     right_motors.forward(speed)
     while counter_left < steps or counter_right < steps:
-        print("left counter:" + str(counter_left) + "\r\n"),
-        print("right counter:" + str(counter_right) + "\r\n"),
+        pass
     stop()
     # reset counters
     counter_reset()
@@ -128,8 +127,7 @@ def backward(cm, speed=1):
     left_motors.backward(speed)
     right_motors.backward(speed)
     while counter_left < steps or counter_right < steps:
-        print("left counter:" + str(counter_left) + "\r\n"),
-        print("right counter:" + str(counter_right) + "\r\n"),
+        pass
     stop()
     # reset counters
     counter_reset()
